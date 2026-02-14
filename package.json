@@ -6,7 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "db:up": "./scripts/db-local.sh up",
+    "db:schema": "./scripts/db-local.sh schema",
+    "db:seed": "./scripts/db-local.sh seed",
+    "db:reset": "./scripts/db-local.sh reset"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

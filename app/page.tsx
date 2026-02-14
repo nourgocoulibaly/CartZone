@@ -8,7 +8,7 @@ import { CtaSection } from "@/components/cta-section"
 
 export default function HomePage() {
   return (
-    <>
+    <div className="bg-background">
       <HeroSection />
       <BrandsTicker />
       <CategoriesSection />
@@ -16,6 +16,6 @@ export default function HomePage() {
       <PromotionsBanner />
       <NewProductsSection />
       <CtaSection />
-    </>
+    </div>
   )
 }
