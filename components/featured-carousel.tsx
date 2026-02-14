@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react"
 import useEmblaCarousel from "embla-carousel-react"
-import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react"
+import { ChevronLeft, ChevronRight, ArrowRight, Flame } from "lucide-react"
 import Link from "next/link"
 import { ProductCard } from "./product-card"
 import { getFeaturedProducts } from "@/lib/data"
@@ -37,40 +37,25 @@ export function FeaturedCarousel() {
   }, [emblaApi, onSelect])
 
   return (
-    <section className="mx-auto max-w-7xl px-4 py-16 lg:px-8">
-      <div className="mb-8 flex items-end justify-between">
+    <section className="mx-auto max-w-7xl px-4 py-14 lg:px-8">
+      <div className="mb-7 flex items-end justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-foreground md:text-3xl">
-            Meilleures ventes
-          </h2>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Les cartes cadeaux les plus populaires
-          </p>
+          <div className="mb-2 inline-flex items-center gap-1 rounded-full bg-orange-400/15 px-2.5 py-1 text-xs font-semibold text-orange-300">
+            <Flame className="h-3.5 w-3.5" />
+            Top ventes
+          </div>
+          <h2 className="text-2xl font-black text-white md:text-3xl">Produits populaires</h2>
+          <p className="mt-1 text-sm text-slate-400">Les meilleures cartes du moment.</p>
         </div>
         <div className="flex items-center gap-2">
-          <Link
-            href="/shop"
-            className="mr-2 hidden items-center gap-1 text-sm font-medium text-primary transition-colors hover:text-primary/80 sm:flex"
-          >
+          <Link href="/shop" className="mr-2 hidden items-center gap-1 text-sm font-semibold text-[#58b8ff] transition-colors hover:text-[#8cccff] sm:flex">
             Tout voir
             <ArrowRight className="h-4 w-4" />
           </Link>
-          <button
-            type="button"
-            onClick={scrollPrev}
-            disabled={!canScrollPrev}
-            className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-card text-foreground transition-colors hover:bg-secondary disabled:opacity-30"
-            aria-label="Precedent"
-          >
+          <button type="button" onClick={scrollPrev} disabled={!canScrollPrev} className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-slate-200 transition-colors hover:bg-white/10 disabled:opacity-30" aria-label="Precedent">
             <ChevronLeft className="h-4 w-4" />
           </button>
-          <button
-            type="button"
-            onClick={scrollNext}
-            disabled={!canScrollNext}
-            className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-card text-foreground transition-colors hover:bg-secondary disabled:opacity-30"
-            aria-label="Suivant"
-          >
+          <button type="button" onClick={scrollNext} disabled={!canScrollNext} className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-slate-200 transition-colors hover:bg-white/10 disabled:opacity-30" aria-label="Suivant">
             <ChevronRight className="h-4 w-4" />
           </button>
         </div>
@@ -79,10 +64,7 @@ export function FeaturedCarousel() {
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="-ml-4 flex">
           {products.map((product) => (
-            <div
-              key={product.id}
-              className="min-w-0 shrink-0 grow-0 basis-full pl-4 sm:basis-1/2 lg:basis-1/3 xl:basis-1/4"
-            >
+            <div key={product.id} className="min-w-0 shrink-0 grow-0 basis-full pl-4 sm:basis-1/2 lg:basis-1/3 xl:basis-1/4">
               <ProductCard product={product} />
             </div>
           ))}
