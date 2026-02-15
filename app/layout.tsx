@@ -11,26 +11,26 @@ const _inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "GiftZone | Cartes Cadeaux Digitales",
+  title: "GartZone | Cartes Cadeaux Digitales",
   description:
     "Achetez vos cartes cadeaux Gaming, Spotify, Apple, Netflix, IPTV et plus. Livraison instantanee par email.",
   generator: "v0.app",
   icons: {
     icon: [
       {
-        url: "/icon-light-32x32.png",
+        url: "/Favicon 2.png",
         media: "(prefers-color-scheme: light)",
       },
       {
-        url: "/icon-dark-32x32.png",
+        url: "/Favicon 2.png",
         media: "(prefers-color-scheme: dark)",
       },
       {
-        url: "/icon.svg",
+        url: "/favicon.svg",
         type: "image/svg+xml",
       },
     ],
-    apple: "/apple-icon.png",
+    apple: "/Favicon 2.png",
   },
 }
 

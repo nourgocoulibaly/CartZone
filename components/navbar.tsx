@@ -3,7 +3,9 @@
 import React from "react"
 
 import Link from "next/link"
-import { useState } from "react"
+import Image from "next/image"
+import { useState, useEffect } from "react"
+import { useTheme } from "next-themes"
 import {
   Search,
   ShoppingCart,
@@ -17,7 +19,6 @@ import {
   Smartphone,
   Satellite,
   Share2,
-  Zap,
   ShieldCheck,
 } from "lucide-react"
 import { useCart } from "@/lib/cart-store"
@@ -37,18 +38,41 @@ export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [categoriesOpen, setCategoriesOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
+  const { theme } = useTheme()
   const { count } = useCart()
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/90 backdrop-blur-xl">
       <nav className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 lg:px-8">
         <Link href="/" className="flex items-center gap-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-accent shadow-[0_0_20px_rgba(43,108,255,0.25)]">
-            <Zap className="h-5 w-5 text-primary-foreground" />
-          </div>
-          <div>
-            <span className="block text-lg font-extrabold tracking-tight text-foreground">GiftZone</span>
-            <span className="block text-[10px] uppercase tracking-[0.2em] text-muted-foreground">digital marketplace</span>
+          <div className="relative h-9 w-42">
+            {mounted && (
+              <>
+                {theme === "light" && (
+                  <Image 
+                    src="/Logo CartZone.png" 
+                    alt="CartZone Logo" 
+                    fill
+                    className="object-contain"
+                    priority
+                  />
+                )}
+                {theme === "dark" && (
+                  <Image 
+                    src="/Logo CartZone (black).png" 
+                    alt="CartZone Logo" 
+                    fill
+                    className="object-contain"
+                    priority
+                  />
+                )}
+              </>
+            )}
           </div>
         </Link>
 
