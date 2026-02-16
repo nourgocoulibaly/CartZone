@@ -1,13 +1,13 @@
 import React from "react"
 import type { Metadata, Viewport } from "next"
-import { Inter, Geist_Mono } from "next/font/google"
+import { Geist_Mono, Nova_Square } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
 import { Providers } from "@/app/providers"
 import "./globals.css"
 
-const _inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
+const novaSquare = Nova_Square({ subsets: ["latin"], weight: "400", variable: "--font-nova-square" })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
@@ -47,7 +47,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr" suppressHydrationWarning>
-      <body className="font-sans antialiased">
+      <body className={`${novaSquare.variable} font-sans antialiased`}>
         <Providers>
           <Navbar />
           <main className="min-h-screen">{children}</main>

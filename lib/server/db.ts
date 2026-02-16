@@ -29,6 +29,35 @@ const schemaFile = path.join(process.cwd(), "db", "sqlite", "schema.sql")
 
 let db: DatabaseSync | null = null
 
+function convertirEurVersXof(montant: number): number {
+  return Math.max(500, Math.round((montant * 655.957) / 500) * 500)
+}
+
+function migrerProduitsVersXof(sqlite: DatabaseSync) {
+  const rows = sqlite
+    .prepare("SELECT id, denominations_json, currency FROM products")
+    .all() as Array<{ id: string; denominations_json: string; currency: string }>
+
+  const update = sqlite.prepare("UPDATE products SET denominations_json = ?, currency = ? WHERE id = ?")
+
+  sqlite.exec("BEGIN")
+  try {
+    for (const row of rows) {
+      const denominations = JSON.parse(row.denominations_json) as number[]
+      const doitConvertir = row.currency !== "XOF" || denominations.some((value) => value < 500)
+      if (!doitConvertir) continue
+
+      const converties = denominations.map(convertirEurVersXof)
+      update.run(JSON.stringify(converties), "XOF", row.id)
+    }
+    sqlite.exec("COMMIT")
+  } catch (error) {
+    sqlite.exec("ROLLBACK")
+    throw error
+  }
+}
+
+
 function ensureDb() {
   if (db) return db
 
@@ -81,6 +110,8 @@ function ensureDb() {
       throw error
     }
   }
+
+  migrerProduitsVersXof(sqlite)
 
   db = sqlite
   return sqlite
@@ -189,7 +220,7 @@ export function createOrder(input: {
   try {
     sqlite.prepare(
       `INSERT INTO orders (id, email, first_name, last_name, phone, payment_method, total_amount, currency, status)
-       VALUES (?, ?, ?, ?, ?, ?, ?, 'EUR', 'pending')`
+       VALUES (?, ?, ?, ?, ?, ?, ?, 'XOF', 'pending')`
     ).run(orderId, input.email, input.firstName, input.lastName, input.phone ?? null, input.paymentMethod, total)
 
     const insertItem = sqlite.prepare(
@@ -209,7 +240,7 @@ export function createOrder(input: {
   return {
     orderId,
     total,
-    currency: "EUR",
+    currency: "XOF",
     itemCount: orderItems.length,
   }
 }
